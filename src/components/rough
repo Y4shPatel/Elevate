@@ -1,0 +1,44 @@
+import React, { useEffect, useState } from 'react';
+
+const Startups = () => {
+  const [startups, setStartups] = useState([]);
+  const host = "http://localhost:5000"
+
+  useEffect(() => {
+    const getStartups = async () => {
+      try {
+          const response = await fetch(`${host}/api/v1/startups`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+          const json = await response.json();
+          setStartups(json.startups);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getStartups();
+  }, [])
+  if(startups?.length){
+    console.log(startups)
+  }
+  return (
+    <>
+      <h1>Add a startup</h1>
+      <AddStartup />
+      <div className="container my-20">
+        <h1>All Startups</h1>
+        {startups.length > 0 && (
+          startups.map((startup) => (
+            <StartupItem key={startup._id} startup={startup} />
+          ))
+        )}
+      </div>
+    </>
+  );
+};
+
+export default Startups;
