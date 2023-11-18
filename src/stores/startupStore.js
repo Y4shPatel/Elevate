@@ -28,7 +28,18 @@ const startupStore = create((set) => ({
     address: "",
   },
 
-  fetchStartups: async () => {
+  fetchStartups : async () => {
+    try {
+      // Fetch the startups
+      const res = await axios.get("http://localhost:5000/api/v1/startups",);
+      // Set to state
+      set({ startups: res.data.startups });
+    } catch (error) {
+      console.error('Error fetching startups:', error);
+    }
+  }, 
+
+  fetchProfileStartups: async () => {
     try {
       // Fetch the startups
       const res = await axios.get("http://localhost:5000/api/v1/startups/profile", {

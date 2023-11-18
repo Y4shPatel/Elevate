@@ -8,7 +8,7 @@ const startupSchema = new mongoose.Schema({
 
     title: {
         type: String,
-        required: [true, ' pls provide te name of your startup'],
+        required: [true, ' pls provide the name of your startup'],
         minlength: 3,
         maxlength: 50,
         unique : true

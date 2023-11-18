@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import startupStore from '../stores/startupStore'
 import StartupItem from './StartupItem';
 const Startups = () => {
     const store = startupStore();
+
+    useEffect(() => {
+      store.fetchStartups();
+    }, []);
   return (
     <div>
     <h2>Startups:</h2>
