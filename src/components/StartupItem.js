@@ -1,20 +1,19 @@
-import React , {useContext} from 'react'
-import StartupContext from '../context/StartupsContext'
+import React from 'react'
+import startupStore from '../stores/startupStore'
 
-const ProfileStartypItem = (props) => {
-  const context = useContext(StartupContext);
-  const { deleteStartup } = context;
-   const {startup} = props;
+
+const StartupItem = ({startup}) => {
+    const store = startupStore((store)=>{
+      return{ deleteStartup :store.deleteStartup , toggleUpdate : store.toggleUpdate};
+    });
+    
   return (
-    <div>
-      <div className="card" >
-  <div className="card-body">
-    <h5 className="card-title">{startup.title}</h5>
-    <p className="card-text"> {startup.description}</p>
-  </div>
-</div>
+    <div key={startup._id}>
+    <h3>{startup.title}</h3>
+    <button onClick={() => { store.deleteStartup(startup._id) }}>Delete</button>
+    <button onClick={() => { store.toggleUpdate(startup) }}>Update</button>
     </div>
   )
 }
 
-export default ProfileStartypItem
+export default StartupItem

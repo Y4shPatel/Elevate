@@ -1,38 +1,27 @@
-
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './Components/Navbar';
-import Home from './Components/Home'
-import About from './Components/About'
-import StartupState from './context/StartupsState';
-import Alert from './Components/Alert';
-import Profile from './Components/Profile';
-
-
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import startupStore from './stores/startupStore';
+import Startups from './components/Startups'
+import UpdateForm from './components/UpdateForm';
+import CreateForm from './components/CreateForm';
 const App = () => {
 
-  
-   return (
-    <>
-    <StartupState>
-      <Router>
-        <Navbar />
-        <Alert message="welcome to Elevate"/>
-        <div className="container">
-        <Routes>
-          <Route exact path="/"element={<Home/>}>
-          </Route>
-          <Route exact path="/about"element={<About/>}>
-          </Route>
-          <Route exact path="/profile"element={<Profile/>}>
-          </Route>
-        </Routes> 
-        </div>
-      </Router>
-      </StartupState>
-    </>
-  )};
 
+  const store = startupStore();
+
+  // Use effect
+  useEffect(() => {
+    store.fetchStartups();
+  }, []);
+
+
+  return (
+    <>
+      <Startups />
+      <UpdateForm />
+      <CreateForm />
+    </>
+  );
+}
 
 export default App;
