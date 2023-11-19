@@ -42,17 +42,14 @@ const startupStore = create((set) => ({
   fetchProfileStartups: async () => {
     try {
       // Fetch the startups
-      const res = await axios.get("http://localhost:5000/api/v1/startups/profile", {
-        headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNmZDkzNGM4MzYwMWQwMDFkOTJlYjYiLCJuYW1lIjoiWWFzaCBQYXRlbCIsImlhdCI6MTY5OTYyNDk3NiwiZXhwIjoxNzAyMjE2OTc2fQ.qEq6PVmJp8X9Ix64oCILbZJj7b6UT9z_HEneq2My47w'
-        }
-      });
+      const res = await axios.get("http://localhost:5000/api/v1/startups/profile", {withCredentials:true});
       // Set to state
       set({ startups: res.data.startups });
     } catch (error) {
       console.error('Error fetching startups:', error);
     }
   },
+  
 
   updateCreateFormField: (e) => {
     const { name, value } = e.target;
@@ -72,11 +69,7 @@ const startupStore = create((set) => ({
 
     // Create the startup
     try {
-      const res = await axios.post("http://localhost:5000/api/v1/startups/profile", createForm, {
-        headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNmZDkzNGM4MzYwMWQwMDFkOTJlYjYiLCJuYW1lIjoiWWFzaCBQYXRlbCIsImlhdCI6MTY5OTYyNDk3NiwiZXhwIjoxNzAyMjE2OTc2fQ.qEq6PVmJp8X9Ix64oCILbZJj7b6UT9z_HEneq2My47w'
-        }
-      });
+      const res = await axios.post("http://localhost:5000/api/v1/startups/profile", createForm, {withCredentials : true});
 
       set((state) => ({
         startups: [...state.startups, res.data.startup],
@@ -99,11 +92,7 @@ const startupStore = create((set) => ({
 
   deleteStartup : async (_id) => {
     //delete the startup
-    const res = await axios.delete(`http://localhost:5000/api/v1/startups/profile/${_id}`, {
-      headers: {
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNmZDkzNGM4MzYwMWQwMDFkOTJlYjYiLCJuYW1lIjoiWWFzaCBQYXRlbCIsImlhdCI6MTY5OTYyNDk3NiwiZXhwIjoxNzAyMjE2OTc2fQ.qEq6PVmJp8X9Ix64oCILbZJj7b6UT9z_HEneq2My47w'
-      }
-    })
+    const res = await axios.delete(`http://localhost:5000/api/v1/startups/profile/${_id}`,{withCredentials : true})
 
     const {startups} = startupStore.getState();
 
@@ -154,11 +143,7 @@ const startupStore = create((set) => ({
       const res = await axios.patch(
         `http://localhost:5000/api/v1/startups/profile/${_id}`,
         { title, description, field, progress, StartedBy, email, phoneNo, address },
-        {
-          headers: {
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTNmZDkzNGM4MzYwMWQwMDFkOTJlYjYiLCJuYW1lIjoiWWFzaCBQYXRlbCIsImlhdCI6MTY5OTYyNDk3NiwiZXhwIjoxNzAyMjE2OTc2fQ.qEq6PVmJp8X9Ix64oCILbZJj7b6UT9z_HEneq2My47w',
-          },
-        }
+        {withCredentials : true}
       );
   
       // Check if the response has the expected data

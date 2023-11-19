@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link, useLocation} from 'react-router-dom';
+import authStore from '../stores/authStore';
 const Navbar = () => {
+  const store = authStore();
   let location = useLocation;
   return (
     <div>
@@ -23,10 +25,13 @@ const Navbar = () => {
           <Link className={`nav-link ${location.pathname==="/profile"?"active": ""}`} to="/profile">Profile</Link>
         </li>
       </ul>
-      <form className="d-flex" role="search">
+      {!store.loggedIn && (<form className="d-flex" role="search">
         <Link className="btn btn-outline-primary mx-1" to = "/login" role = "button">login</Link>
         <Link  className="btn btn-outline-primary mx-1" to = "/signup" role = "button">signup</Link>
-      </form>
+        </form>)}
+        {store.loggedIn && (<form>
+        <Link  className="btn btn-outline-primary mx-1" to = "/logout" role = "button">logout</Link>
+      </form>)}
     </div>
   </div>
 </nav>

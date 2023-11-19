@@ -1,21 +1,33 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import authStore from "../stores/authStore"
 const Login = () => {
+
  const store = authStore()
+
+  const navigate = useNavigate()
+
+ const handleLogin = async  (e)=>{
+  e.preventDefault();
+ await store.login()
+
+ //navigate
+navigate("/profile")
+ }
   return (
     <>
-      <form onSubmit={store.login}>
-  <div classname="mb-3">
-    <label htmlfor="email" classname="form-label">Email address</label>
-    <input onChange={store.updateLoginForm} value={store.loginForm.email}type="email" classname="form-control" id="email" name="email" aria-describedby="emailHelp"/>
-    <div id="emailHelp" classname="form-text">We'll never share your email with anyone else.</div>
+      <form onSubmit={handleLogin}>
+  <div className="mb-3">
+    <label htmlfor="email" className="form-label">Email address</label>
+    <input onChange={store.updateLoginForm} value={store.loginForm.email}type="email" className="form-control" id="email" name="email" aria-describedby="emailHelp"/>
+  
   </div>
-  <div classname="mb-3">
-    <label htmlfor="exampleInputPassword1" classname="form-label">Password</label>
-    <input onChange={store.updateLoginForm} value = {store.loginForm.password}type="password"  classname="form-control" id="password" name = "password" />
+  <div className="mb-3">
+    <label htmlfor="exampleInputPassword1" className="form-label">Password</label>
+    <input onChange={store.updateLoginForm} value = {store.loginForm.password}type="password"  className="form-control" id="password" name = "password" />
   </div>
-  <button type="submit" classname="btn btn-primary" >Submit</button>
+  <button type="submit" className="btn btn-primary" >Submit</button>
 </form>
     </>
   )
