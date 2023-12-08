@@ -9,7 +9,7 @@ const Startups = () => {
     }, []);
   return (
     <div>
-    <h2>Startups:</h2>
+    <h2>Available Startups:</h2>
     {store.startups && store.startups.map(startup => (
 <StartupItem key={startup._id} startup={startup}/>
 ))}

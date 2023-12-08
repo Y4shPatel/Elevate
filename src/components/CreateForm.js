@@ -7,7 +7,7 @@ const CreateForm = () => {
     <>
       {!store.updateForm._id && (
         <div>
-          <h2>Create a Startup</h2>
+          <h2>Add a Startup</h2>
           <form onSubmit={store.createStartup} >
             <div className="mb-3">
               <label htmlFor="title" className="form-label">title</label>

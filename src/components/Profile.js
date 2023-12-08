@@ -11,7 +11,7 @@ const Profile = () => {
     }, []);
   return (
     <div>
-    <h2>Startups:</h2>
+    <h2>Your Startups:</h2>
     {store.startups && store.startups.map(startup => (
 <ProfileStartupItem key={startup._id} startup={startup}/>
 ))}
