@@ -1,0 +1,51 @@
+name: Run Postman Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongosh --eval 'db.runCommand({ ping: 1 })'" 
+          --health-interval=10s 
+          --health-timeout=5s 
+          --health-retries=5
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: backend # adjust this path if needed
+
+    - name: Start Backend
+      run: npm start &
+      working-directory: backend # adjust path
+
+    - name: Wait for server to be up
+      run: |
+        echo "Waiting for server to start..."
+        sleep 10
+
+    - name: Install Newman
+      run: npm install -g newman
+
+    - name: Run Postman Collection
+      run: |
+        newman run postman/Elevate.postman_collection.json
